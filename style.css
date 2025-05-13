@@ -3,9 +3,11 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 html {
     scroll-behavior: smooth;
 }
+
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #080808;
@@ -14,6 +16,7 @@ body {
     min-height: 100vh;
     line-height: 1.5;
 }
+
 .image-gradient {
     position: absolute;
     top: 0;
@@ -21,6 +24,7 @@ body {
     opacity: 0.5;
     z-index: -1;
 }
+
 .layer-blur {
     height: 0;
     width: 30rem;
@@ -31,6 +35,7 @@ body {
     rotate: -30deg;
     z-index: -1;
 }
+
 .container {
     width: 100%;
     margin: 0 auto;
@@ -38,6 +43,7 @@ body {
     position: relative;
     overflow: hidden;
 }
+
 header {
     position: fixed;
     top: 0;
@@ -50,60 +56,95 @@ header {
     height: 70px;
     z-index: 10000;
 }
+
 header h1 {
     margin: 0;
     font-size: 3rem;
     font-weight: 300;
 }
+
 header.scrolled {
     background: rgba(0, 0, 0, 0.6);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     box-shadow: 0 0 20px rgb(0, 0, 0);
 }
+
 .menu {
     display: none;
-    color: #fff;
+    position: relative;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
     cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.menu i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 30px;
+    color: #fff;
+    line-height: 1;
 }
+
 .menu:hover {
-    color: #a1a0a1;
+    background: rgba(255, 255, 255, 0.2);
 }
+
 .modal {
     position: fixed;
     top: 0;
     right: -100%;
     width: 250px;
-    height: 100%;
-    background: #222;
+    height: auto;
+    background: rgba(50, 50, 51, 0.466);
     color: white;
     transition: right 0.3s ease-in-out;
     padding: 20px;
-    z-index: 9999;
+    z-index: 99999;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    overflow-y: auto;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    box-shadow: 0 0 20px rgb(0, 0, 0);
 }
-/* Show modal when active */
+
 .modal.active {
     right: 0;
-    transform: scale(0.9);
 }
-/* Navigation inside modal */
+
 .modal .nav-link {
     display: block;
     padding: 15px 0;
     color: white;
     text-decoration: none;
 }
-.modal .close-btn {
-    cursor: pointer;
-    font-size: 24px;
+
+.modal .nav-link::after {
+    content: none;
 }
+
+.modal .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    cursor: pointer;
+    font-size: 30px;
+    z-index: 100;
+}
+
 nav {
     display: flex;
     align-items: center;
     gap: 3rem;
     margin-left: -5%;
 }
+
 nav a {
     position: relative;
     font-size: 1rem;
@@ -112,12 +153,15 @@ nav a {
     text-decoration: none;
     color: inherit;
 }
+
 .nav-link:hover {
     color: #5300a0;
 }
+
 .nav-link.active {
     color: #5300a0;
 }
+
 nav a::after {
     content: '';
     position: absolute;
@@ -129,10 +173,12 @@ nav a::after {
     transition: width 0.4s ease, left 0.4s ease;
     transform: translateX(-50%);
 }
+
 nav a:hover::after {
     width: 100%;
     left: 50%;
 }
+
 .btn-signing {
     background-color: #a7a7a7;
     color: #000;
@@ -145,20 +191,24 @@ nav a:hover::after {
     cursor: pointer;
     text-decoration: none;
 }
+
 .btn-signing:hover {
     background-color: #fff;
 }
+
 .main {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100vh;
 }
+
 .content {
     max-width: 40rem;
     margin-left: 10%;
     z-index: 999;
 }
+
 .tag-box {
     position: relative;
     width: 18rem;
@@ -169,11 +219,13 @@ nav a:hover::after {
     animation: animationgradient 2.5s linear infinite;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
+
 @keyframes animationgradient {
     to {
         background-position: 200%;
     }
 }
+
 .tag-box .tag {
     position: absolute;
     inset: 3px 3px 3px 3px;
@@ -185,9 +237,11 @@ nav a:hover::after {
     transition: 0.5s ease;
     cursor: pointer;
 }
+
 .tag-box .tag:hover {
     color: #5300a0;
 }
+
 .shine-line {
     position: relative;
     font-size: 4rem;
@@ -199,6 +253,7 @@ nav a:hover::after {
     -webkit-text-stroke: 1px #383d52;
     text-transform: uppercase;
 }
+
 .shine-line::before {
     content: attr(data-text);
     position: absolute;
@@ -212,25 +267,34 @@ nav a:hover::after {
     overflow: hidden;
     animation: slideBorder 6s linear infinite;
 }
+
 @keyframes slideBorder {
-    0%,10%,100% {
+
+    0%,
+    10%,
+    100% {
         width: 0%;
     }
-    70%,90% {
-        width: 50%;
+
+    70%,
+    90% {
+        width: 55%;
     }
 }
+
 .description {
     font-size: 1.2rem;
     letter-spacing: 0.05em;
     max-width: 35rem;
     color: gray;
 }
+
 .buttons {
     display: flex;
     gap: 1rem;
     margin-top: 3rem;
 }
+
 .btn-get-started {
     text-decoration: none;
     align-items: center;
@@ -242,9 +306,11 @@ nav a:hover::after {
     letter-spacing: 0.1rem;
     transition: background-color 0.2s ease;
 }
+
 .btn-get-started:hover {
     background-color: #1a1a1a;
 }
+
 .btn-signing-main {
     text-decoration: none;
     background-color: lightgray;
@@ -255,9 +321,11 @@ nav a:hover::after {
     letter-spacing: 0.1rem;
     transition: background-color 0.2s ease;
 }
+
 .btn-signing-main:hover {
     background-color: gray;
 }
+
 .btn-Rate {
     position: relative;
     padding: 0.7rem 1.2rem;
@@ -266,9 +334,11 @@ nav a:hover::after {
     border: 1px solid #2a2a2a;
     color: #fff;
 }
+
 .btn-Rate:hover {
     background-color: #1a1a1a;
 }
+
 .stars {
     display: flex;
     justify-content: center;
@@ -277,16 +347,19 @@ nav a:hover::after {
     font-size: 18px;
     letter-spacing: 3px;
 }
+
 .rating-row {
     display: flex;
     justify-content: space-between;
     font-size: 10px;
     color: #f5e663;
 }
+
 .rating,
 .comment {
     margin: 0;
 }
+
 .robot-3d {
     position: absolute;
     top: 0;
@@ -299,6 +372,7 @@ nav a:hover::after {
     user-select: none;
     touch-action: none;
 }
+
 .cover {
     position: absolute;
     top: 0;
@@ -309,45 +383,56 @@ nav a:hover::after {
     background-color: transparent;
     z-index: 1;
 }
+
 @media (max-width: 1300px) {
     header {
         padding: 1rem 0.5rem;
     }
+
     .content {
         margin-top: 85%;
     }
+
     .robot-3d {
         scale: 0.8;
         top: -20%;
         right: 2%;
     }
 }
+
 @media (max-width: 768px) {
     header {
         padding: 4px 15px;
     }
+
     nav {
         display: none;
     }
+
     header h1 {
         font-size: 2rem;
     }
+
     .btn-signing {
         padding: 0.6rem 1.5rem;
     }
+
     .content {
         margin-top: 25rem;
         max-width: 10%;
         margin-left: 10%;
     }
+
     .robot-3d {
         scale: 0.5;
         top: -25%;
         right: 0;
     }
+
     .tag-box {
         width: 12rem;
     }
+
     .content h1 {
         font-size: 2.5rem;
     }
@@ -377,6 +462,10 @@ nav a:hover::after {
     margin-top: 10px;
     padding-bottom: 5rem;
     padding-top: 70px;
+}
+
+.education .heading {
+    margin-top: 70px;
 }
 
 .heading {
@@ -530,15 +619,19 @@ nav a:hover::after {
         opacity: 1;
     }
 }
+
 .flip-left {
     animation: flipLeft 0.6s ease;
 }
+
 .flip-right {
     animation: flipRight 0.6s ease;
 }
+
 .img-holder {
     margin-bottom: 15px;
 }
+
 .image {
     width: 150px;
     height: 150px;
@@ -546,6 +639,7 @@ nav a:hover::after {
     object-fit: cover;
     box-shadow: 0 0 50px rgb(48, 33, 250);
 }
+
 .card p {
     flex: 1;
     overflow-y: auto;
@@ -556,16 +650,20 @@ nav a:hover::after {
     max-height: 150px;
     padding-right: 5px;
 }
+
 .card p::-webkit-scrollbar {
     width: 6px;
 }
+
 .card p::-webkit-scrollbar-thumb {
     background-color: #ccc;
     border-radius: 4px;
 }
+
 .card p::-webkit-scrollbar-track {
     background: transparent;
 }
+
 .read {
     background-color: #007bff;
     color: #fff;
@@ -581,19 +679,24 @@ nav a:hover::after {
     font-weight: bold;
     text-decoration: none;
 }
+
 .read:hover {
     background-color: #0056b3;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 .read:active {
     transform: scale(0.98);
 }
+
 .card span i {
     font-size: 27px;
 }
+
 .navigation {
     margin-top: 30px;
 }
+
 .navigation button {
     background-color: #11055a;
     color: white;
@@ -605,28 +708,38 @@ nav a:hover::after {
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 .navigation button:hover {
     background-color: #0056b3;
 }
+
 #contact {
     background-color: #060aff65;
     text-align: center;
     padding: 40px 20px;
+    height: 100vh;
     margin: auto;
     align-items: center;
     justify-content: center;
 }
+
+.contact .heading {
+    margin-top: 20px;
+}
+
 .contact form {
     max-width: 70rem;
     margin: 1rem auto;
     text-align: center;
     margin-bottom: 5px;
 }
+
 .contact form .input-box {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
+
 .contact form .input-box input,
 .contact form textarea {
     padding: 10px;
@@ -639,20 +752,82 @@ nav a:hover::after {
     font-size: 22px;
     outline: none;
 }
+
 .contact form .input-box input {
     width: 49%;
 }
+
 .contact form textarea {
     resize: none;
 }
 
+.contact form .submit-btn {
+    display: inline-block;
+    margin: 2rem auto 0;
+    padding: 0.8rem 2rem;
+    background-color: #2600ff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.contact form .submit-btn:hover {
+    background-color: #0b0eb1a1;
+    color: #aca9a9;
+}
+
 @media (max-width: 460px) {
+    header {
+        padding: 1rem 2rem;
+    }
+
     .menu {
         display: block;
     }
-    nav {
+
+    header>nav {
         display: none;
     }
+
+    .modal {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .modal nav {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-top: 50px;
+        padding-left: 10px;
+        width: 100%;
+    }
+
+    .modal .nav-link {
+        display: block;
+        font-size: 18px;
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #444;
+        width: 100%;
+    }
+
+    .modal .nav-link:hover {
+        color: #5300a0;
+        left: 1rem;
+    }
+
+    .modal.active {
+        right: 0;
+    }
+
     .content {
         position: relative;
         z-index: 10;
@@ -660,9 +835,23 @@ nav a:hover::after {
         margin-left: 5%;
         max-width: 90%;
     }
+
     .btn-signing {
         display: none;
     }
+
+    .modal > .btn-signing {
+        display: block;
+        margin: 0 auto;
+        width: 30%;
+        padding: 0.6rem 1.5rem;
+        position: absolute;
+        top: 1rem;
+        left: 8px;
+        cursor: pointer;
+        z-index: 100;
+    }
+
     .main {
         position: relative;
         width: 100%;
@@ -672,21 +861,26 @@ nav a:hover::after {
         align-items: center;
         overflow: visible;
     }
+
     .shine-line {
         font-size: 2.5rem;
         margin: 1.5rem 0;
     }
+
     .description {
         font-size: 0.9rem;
         line-height: 1.4;
     }
+
     .tag-box {
         width: 10rem;
         height: 2rem;
     }
+
     .tag-box .tag {
         font-size: 0.7rem;
     }
+
     .buttons {
         flex-direction: column;
         align-items: flex-start;
@@ -732,6 +926,24 @@ nav a:hover::after {
 
     .cover {
         z-index: 2;
+    }
+
+    #education {
+        padding: 0 1rem;
+    }
+
+    .education-content .contents {
+        border: 2px solid #ffffff;
+    }
+
+    .education-column .education-box {
+        border-left: 2px solid #fffeff;
+    }
+
+    .education-box .education-content::before {
+        width: 20px;
+        height: 20px;
+        left: -0.73rem;
     }
 
     .contact form .input-box input,
