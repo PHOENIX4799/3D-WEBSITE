@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sign Up</title>
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <title>Mobile Login / Sign Up Sliding with Spacing & Close Button</title>
   <style>
     /* Reset and base */
     * {
@@ -29,7 +28,7 @@
     #app {
       position: relative;
       width: 100vw;
-      max-width: 360px;
+      max-width: 350px;
       height: 600px;
       background: #fff;
       border-radius: 24px;
@@ -40,27 +39,58 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      padding: 0 15px; /* horizontal padding for spacing */
     }
 
-    #app .close-icon-right {
-    position: absolute;
-    top: 0;
-    right: 20px;
-    font-size: 30px;
-    color: #ffffff;
-    text-decoration: none;
-    z-index: 99;
-}
+    /* Close button */
+    #close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, color 0.2s ease;
+      color: #5300a0;
+      -webkit-user-select: none;
+      user-select: none;
+      z-index: 1000;
+    }
+    #close-btn:hover,
+    #close-btn:focus {
+      color: #7f47d7;
+      outline: none;
+      transform: scale(1.1);
+    }
+    #close-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      -webkit-user-select: none;
+      user-select: none;
+      pointer-events: none;
+    }
 
     /* Container wrappers */
     .form-container {
       position: absolute;
       top: 0;
-      left: 0;
-      width: 100%;
+      left: 15px;
+      right: 15px;
+      width: auto;
       height: 100%;
       background: #ffffff;
-      /* padding: 36px 28px 30px; */
+      padding: 36px 28px 30px;
       box-sizing: border-box;
       transition:
         transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
@@ -228,6 +258,7 @@
     input[type="text"],
     input[type="email"],
     input[type="password"] {
+      width: 90%;
       padding: 14px 18px;
       font-size: 1.1rem;
       margin-bottom: 20px;
@@ -241,6 +272,7 @@
       outline-color: transparent;
       -webkit-user-select: text;
       user-select: text;
+      align-self: center;
       box-shadow:
         inset 0 1px 2px #c7b8f7aa,
         0 0 0 transparent;
@@ -315,6 +347,7 @@
         box-shadow: 0 4px 14px rgba(83, 0, 160, 0.25);
         overflow: visible;
         position: relative;
+        padding: 0;
       }
       .form-container {
         position: relative !important;
@@ -328,6 +361,9 @@
         height: auto;
         display: block;
         border-radius: 20px;
+        left: auto !important;
+        right: auto !important;
+        width: auto !important;
       }
       .button-panel {
         margin-bottom: 30px;
@@ -340,12 +376,15 @@
         pointer-events: none;
         box-shadow: none !important;
       }
+      #close-btn {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
   <div id="app" class="">
-    <button id="close-btn" aria-label="Close login form">
+    <button id="close-btn" aria-label="Close login form" title="Close">
       <svg viewBox="0 0 24 24" >
         <line x1="18" y1="6" x2="6" y2="18"/>
         <line x1="6" y1="6" x2="18" y2="18"/>
@@ -463,9 +502,8 @@
       window.location.href = 'index.html';
     });
 
-    // Initialize with login form visible 
+    // Initialize with login form visible
     showLogin();
   </script>
 </body>
 </html>
-
