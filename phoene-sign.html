@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mobile Login / Sign Up Sliding Enhanced</title>
+  <title>Sign Up</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <style>
     /* Reset and base */
     * {
@@ -28,7 +29,7 @@
     #app {
       position: relative;
       width: 100vw;
-      max-width: 350px;
+      max-width: 360px;
       height: 600px;
       background: #fff;
       border-radius: 24px;
@@ -41,6 +42,16 @@
       flex-direction: column;
     }
 
+    #app .close-icon-right {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 30px;
+    color: #ffffff;
+    text-decoration: none;
+    z-index: 99;
+}
+
     /* Container wrappers */
     .form-container {
       position: absolute;
@@ -49,7 +60,7 @@
       width: 100%;
       height: 100%;
       background: #ffffff;
-      padding: 36px 28px 30px;
+      /* padding: 36px 28px 30px; */
       box-sizing: border-box;
       transition:
         transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
@@ -334,13 +345,19 @@
 </head>
 <body>
   <div id="app" class="">
+    <button id="close-btn" aria-label="Close login form">
+      <svg viewBox="0 0 24 24" >
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
     <div class="form-container sign-in active" aria-live="polite" aria-label="Login form" aria-hidden="false">
       <div class="button-panel" role="tablist" aria-label="Switch between Login and Sign Up forms">
         <button class="static login-btn" role="tab" aria-selected="true" aria-controls="login-form" id="login-tab-1" type="button" aria-current="page">Login</button>
         <button class="static signup-btn" role="tab" aria-selected="false" aria-controls="signup-form" id="signup-tab-1" type="button">Sign Up</button>
       </div>
       <h2>Sign In</h2>
-      <form novalidate>
+      <form id="login-form" novalidate>
         <label for="login-email">Email</label>
         <input type="email" id="login-email" name="email" placeholder="you@example.com" autocomplete="username" required />
 
@@ -381,6 +398,7 @@
     // Buttons (both forms have two buttons)
     const loginButtons = app.querySelectorAll('.static.login-btn');
     const signupButtons = app.querySelectorAll('.static.signup-btn');
+    const closeBtn = document.getElementById('close-btn');
 
     // Helper to show login form sliding
     function showLogin() {
@@ -438,6 +456,11 @@
       button.addEventListener('click', () => {
         showSignup();
       });
+    });
+
+    // Close button leads to index.html
+    closeBtn.addEventListener('click', () => {
+      window.location.href = 'index.html';
     });
 
     // Initialize with login form visible 
