@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // —— Testimonial Carousel ——
     const cards = document.querySelectorAll(".card");
     let current = 0;
+
     function updateActiveCard(idx, dir) {
         cards.forEach((c, i) => {
             c.classList.remove("active", "flip-left", "flip-right");
@@ -10,17 +11,18 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    updateActiveCard(current, "next");
-    document.getElementById("nextBtn")
-        .addEventListener("click", () => {
+
+    if (cards.length > 0) {
+        updateActiveCard(current, "next");
+        document.getElementById("nextBtn")?.addEventListener("click", () => {
             current = (current + 1) % cards.length;
             updateActiveCard(current, "next");
         });
-    document.getElementById("prevBtn")
-        .addEventListener("click", () => {
+        document.getElementById("prevBtn")?.addEventListener("click", () => {
             current = (current - 1 + cards.length) % cards.length;
             updateActiveCard(current, "prev");
         });
+    }
 
     // —— Scroll-header and Scroll-Spy ——
     const header = document.querySelector("header");
@@ -28,8 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const navLinks = document.querySelectorAll(".nav-link");
 
     window.addEventListener("scroll", () => {
-        header.classList.toggle("scrolled", window.scrollY > 10);
-    });
+        header?.classList.toggle("scrolled", window.scrollY > 10);
+    }, { passive: true });
 
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
@@ -48,20 +50,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = document.querySelector(".modal");
     const closeBtn = document.querySelector(".modal .close-btn");
 
-    if (!menuBtn || !modal || !closeBtn) {
-        console.error("Modal/menu elements not found – check your selectors!");
-    } else {
-        // Toggle modal open/close
+    if (menuBtn && modal && closeBtn) {
         menuBtn.addEventListener("click", () => {
             modal.classList.toggle("active");
         });
 
-        // Close btn
         closeBtn.addEventListener("click", () => {
             modal.classList.remove("active");
         });
 
-        // Click outside
         window.addEventListener("click", e => {
             if (
                 modal.classList.contains("active") &&
@@ -72,16 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // —— NEW: close modal when clicking any link inside it ——
-        modal
-            .querySelectorAll(".nav-link")
-            .forEach(link =>
-                link.addEventListener("click", () => {
-                    modal.classList.remove("active");
-                })
-            );
+        modal.querySelectorAll(".nav-link").forEach(link =>
+            link.addEventListener("click", () => {
+                modal.classList.remove("active");
+            })
+        );
+    } else {
+        console.error("Modal/menu elements not found – check your selectors!");
     }
-
 
     // —— Optional WhatsApp ——
     const whatsappIcon = document.getElementById("whatsapp-icon");
@@ -93,11 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // —— Auto-play audio ——
-    document.getElementById("pageAudio")?.play();
+    // —— Footer Year Update ——
+    document.getElementById('current-year').textContent = new Date().getFullYear();
 
-    // —— footer ——
-    document.getElementById('current-year')
-          .textContent = new Date().getFullYear();
+    // —— AOS Init ——
+    AOS.init();
 });
-

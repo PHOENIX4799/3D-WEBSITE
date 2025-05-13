@@ -41,7 +41,7 @@
             <a data-aos="fade-down" data-aos-duration="1500" class="btn-signing" href="index-sign.html">SIGNING</a>
 
             <div class="modal">
-                <a data-aos="fade-down" data-aos-duration="1500" class="btn-signing" href="index-sign.html">SIGNING</a>
+                <a data-aos="fade-down" data-aos-duration="1500" class="btn-signing" href="phoene-sign.html">SIGNING</a>
                 <span class="close-btn"><i class='bx bx-x-circle'></i></span>
                 <nav>
                     <a class="nav-link" href="#Home">HOME</a>
@@ -246,19 +246,14 @@
             <p>© <span id="current-year"></span> Phoenix. All rights reserved.</p>
         </footer>
 
-        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-        <script>
-            AOS.init();
-        </script>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                document.getElementById("pageAudio").play();
-            });
-        </script>
+        <script defer src="https://unpkg.com/aos@next/dist/aos.js"></script>
     </div>
     <script defer src="script.js"></script>
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.89/build/spline-viewer.js"></script>
+    <script type="module">
+        window.addEventListener('load', () => {
+            import('https://unpkg.com/@splinetool/viewer@1.9.89/build/spline-viewer.js');
+        });
+    </script>
 
 </body>
 

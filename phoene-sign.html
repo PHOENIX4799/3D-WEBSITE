@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mobile Login / Sign Up Sliding Enhanced</title>
+  <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #2c003e, #5300a0);
+      color: #f0e9ff;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    #app {
+      position: relative;
+      width: 100vw;
+      max-width: 350px;
+      height: 600px;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow:
+        0 8px 20px rgba(83, 0, 160, 0.4),
+        0 0 30px rgba(83, 0, 160, 0.2),
+        inset 0 0 60px rgba(255 255 255 / 0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Container wrappers */
+    .form-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      padding: 36px 28px 30px;
+      box-sizing: border-box;
+      transition:
+        transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.4s ease;
+      will-change: transform, opacity;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      z-index: 1;
+      border-radius: 24px;
+      box-shadow: 0 15px 25px rgba(83, 0, 160, 0.25);
+    }
+
+    .form-container.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      z-index: 3;
+    }
+
+    /* Positions and transforms */
+    .form-container.sign-in {
+      transform: translateY(0%);
+    }
+    .form-container.sign-up {
+      transform: translateY(100%);
+    }
+
+    /* When active toggled on #app, slide the forms appropriately */
+    #app.active .form-container.sign-in {
+      transform: translateY(-100%);
+    }
+    #app.active .form-container.sign-up {
+      transform: translateY(0%);
+    }
+
+    /* Button panel inside each form on top */
+    .button-panel {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      gap: 16px;
+      margin-bottom: 25px;
+      -webkit-user-select: none;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    /* Buttons to toggle forms */
+    .static {
+      flex: 1;
+      background: #e0dafb;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 0;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #5300a0;
+      cursor: pointer;
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 0 0 transparent;
+      -webkit-user-select: none;
+      user-select: none;
+      font-variant-caps: all-small-caps;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    .static:focus {
+      outline: none;
+      box-shadow: 0 0 8px 2px #5300a0aa;
+      background-color: #c9b8f8;
+      color: #3c0072;
+      border: none;
+    }
+    .static:active {
+      background-color: #b293f6;
+      color: #310064;
+      box-shadow: inset 0 0 8px #36007c88;
+    }
+    /* Active states for buttons inside containers */
+    /* For sign-in container buttons */
+    .form-container.sign-in .static.login-btn {
+      background-color: #5300a0;
+      color: #fff;
+      pointer-events: none;
+      box-shadow:
+        0 0 12px 2px #7f47d7aa,
+        inset 0 0 12px 1px #914ef2;
+      cursor: default;
+    }
+    .form-container.sign-in .static.signup-btn {
+      background-color: #e0dafb;
+      color: #5300a0;
+      pointer-events: auto;
+      box-shadow: none;
+      cursor: pointer;
+    }
+    /* For sign-up container buttons */
+    .form-container.sign-up .static.signup-btn {
+      background-color: #5300a0;
+      color: #fff;
+      pointer-events: none;
+      box-shadow:
+        0 0 12px 2px #7f47d7aa,
+        inset 0 0 12px 1px #914ef2;
+      cursor: default;
+    }
+    .form-container.sign-up .static.login-btn {
+      background-color: #e0dafb;
+      color: #5300a0;
+      pointer-events: auto;
+      box-shadow: none;
+      cursor: pointer;
+    }
+
+    /* Headings */
+    h2 {
+      margin: 0 0 24px;
+      font-weight: 700;
+      font-size: 2rem;
+      color: #5300a0;
+      text-align: center;
+      flex-shrink: 0;
+      text-shadow: 0 1px #d4c7f7cc;
+      -webkit-user-select: none;
+      user-select: none;
+      letter-spacing: 0.06em;
+      font-variant: small-caps;
+    }
+
+    /* Form fields */
+    form {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #7f47d7 transparent;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+    form::-webkit-scrollbar {
+      width: 8px;
+    }
+    form::-webkit-scrollbar-thumb {
+      background-color: #7f47d7;
+      border-radius: 12px;
+      box-shadow: inset 0 0 5px #5a0bc7;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      color: #4b2675;
+      text-shadow: 0 1px 0 #fff3;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      padding: 14px 18px;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      border-radius: 20px;
+      border: 2px solid #d4c7f7;
+      background: #f7f3ff;
+      transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+      outline-offset: 2px;
+      outline-color: transparent;
+      -webkit-user-select: text;
+      user-select: text;
+      box-shadow:
+        inset 0 1px 2px #c7b8f7aa,
+        0 0 0 transparent;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #5300a0;
+      box-shadow:
+        inset 0 1px 3px #9757fdaa,
+        0 0 12px 3px #b08fffcc;
+      outline-color: #5300a0cc;
+      background: #f2edff;
+    }
+    input::placeholder {
+      font-style: italic;
+      opacity: 0.5;
+      color: #7a5fcc;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* Buttons for submitting */
+    .submit-btn {
+      background: linear-gradient(135deg, #5300a0, #7f47d7);
+      color: white;
+      font-weight: 700;
+      border: none;
+      border-radius: 26px;
+      padding: 16px 0;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition:
+        background 0.35s ease,
+        box-shadow 0.3s ease;
+      margin-top: auto;
+      -webkit-user-select: none;
+      user-select: none;
+      box-shadow:
+        0 4px 16px #5300a0cc;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      letter-spacing: 0.06em;
+      font-variant: small-caps;
+    }
+    .submit-btn:hover,
+    .submit-btn:focus {
+      background: linear-gradient(135deg, #7f47d7, #5300a0);
+      box-shadow:
+        0 0 20px 4px #7f47d7cc,
+        inset 0 0 10px 2px #9e6fffcc;
+      outline: none;
+    }
+    .submit-btn:active {
+      background: linear-gradient(135deg, #3b0071, #5f31aa);
+      box-shadow: inset 0 0 8px #430099cc;
+    }
+
+    /* Responsive rules: disable sliding on desktop */
+    @media (min-width: 601px) {
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        overflow: auto;
+        background: #eee;
+      }
+      #app {
+        width: 350px;
+        height: auto;
+        border-radius: 20px;
+        box-shadow: 0 4px 14px rgba(83, 0, 160, 0.25);
+        overflow: visible;
+        position: relative;
+      }
+      .form-container {
+        position: relative !important;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        z-index: auto !important;
+        box-shadow: none;
+        padding: 50px 36px 36px;
+        height: auto;
+        display: block;
+        border-radius: 20px;
+      }
+      .button-panel {
+        margin-bottom: 30px;
+        width: 100%;
+      }
+      .static {
+        cursor: default;
+        background-color: #5300a0 !important;
+        color: white !important;
+        pointer-events: none;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="">
+    <div class="form-container sign-in active" aria-live="polite" aria-label="Login form" aria-hidden="false">
+      <div class="button-panel" role="tablist" aria-label="Switch between Login and Sign Up forms">
+        <button class="static login-btn" role="tab" aria-selected="true" aria-controls="login-form" id="login-tab-1" type="button" aria-current="page">Login</button>
+        <button class="static signup-btn" role="tab" aria-selected="false" aria-controls="signup-form" id="signup-tab-1" type="button">Sign Up</button>
+      </div>
+      <h2>Sign In</h2>
+      <form novalidate>
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" name="email" placeholder="you@example.com" autocomplete="username" required />
+
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+
+        <button class="submit-btn" type="submit">Login</button>
+      </form>
+    </div>
+
+    <div class="form-container sign-up" aria-live="polite" aria-label="Sign Up form" aria-hidden="true">
+      <div class="button-panel" role="tablist" aria-label="Switch between Login and Sign Up forms">
+        <button class="static login-btn" role="tab" aria-selected="false" aria-controls="login-form" id="login-tab-2" type="button">Login</button>
+        <button class="static signup-btn" role="tab" aria-selected="true" aria-controls="signup-form" id="signup-tab-2" type="button" aria-current="page">Sign Up</button>
+      </div>
+      <h2>Sign Up</h2>
+      <form novalidate>
+        <label for="signup-name">Full Name</label>
+        <input type="text" id="signup-name" name="name" placeholder="Your full name" autocomplete="name" required />
+
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" name="email" placeholder="you@example.com" autocomplete="email" required />
+
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="password" placeholder="••••••••" autocomplete="new-password" required />
+
+        <button class="submit-btn" type="submit">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Elements
+    const app = document.getElementById('app');
+    const signInForm = app.querySelector('.form-container.sign-in');
+    const signUpForm = app.querySelector('.form-container.sign-up');
+
+    // Buttons (both forms have two buttons)
+    const loginButtons = app.querySelectorAll('.static.login-btn');
+    const signupButtons = app.querySelectorAll('.static.signup-btn');
+
+    // Helper to show login form sliding
+    function showLogin() {
+      app.classList.remove('active');
+      // Update active classes on containers and aria attributes
+      signInForm.classList.add('active');
+      signInForm.setAttribute('aria-hidden', 'false');
+      signUpForm.classList.remove('active');
+      signUpForm.setAttribute('aria-hidden', 'true');
+
+      // Update buttons aria-selected and pointer-events
+      loginButtons.forEach(btn => {
+        btn.setAttribute('aria-selected', 'true');
+        btn.setAttribute('aria-current', 'page');
+        btn.style.pointerEvents = 'none';
+      });
+      signupButtons.forEach(btn => {
+        btn.setAttribute('aria-selected', 'false');
+        btn.removeAttribute('aria-current');
+        btn.style.pointerEvents = 'auto';
+      });
+      signInForm.querySelector('form').focus();
+    }
+
+    // Helper to show signup form sliding in
+    function showSignup() {
+      app.classList.add('active');
+      // Update active classes and aria attributes
+      signUpForm.classList.add('active');
+      signUpForm.setAttribute('aria-hidden', 'false');
+      signInForm.classList.remove('active');
+      signInForm.setAttribute('aria-hidden', 'true');
+
+      // Update buttons aria-selected and pointer-events
+      signupButtons.forEach(btn => {
+        btn.setAttribute('aria-selected', 'true');
+        btn.setAttribute('aria-current', 'page');
+        btn.style.pointerEvents = 'none';
+      });
+      loginButtons.forEach(btn => {
+        btn.setAttribute('aria-selected', 'false');
+        btn.removeAttribute('aria-current');
+        btn.style.pointerEvents = 'auto';
+      });
+      signUpForm.querySelector('form').focus();
+    }
+
+    // Attach event listeners
+    loginButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        showLogin();
+      });
+    });
+    signupButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        showSignup();
+      });
+    });
+
+    // Initialize with login form visible 
+    showLogin();
+  </script>
+</body>
+</html>
+
