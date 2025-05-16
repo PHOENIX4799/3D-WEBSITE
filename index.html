@@ -97,11 +97,24 @@
                     </div>
                 </div>
             </div>
-            <spline-viewer class="robot-3d" url="https://prod.spline.design/D8tXXK9oT9ukJphm/scene.splinecode"
-                disableZoom disablePan disableCameraControls data-aos="fade-zoom-in" data-aos-easing="ease-in-back"
-                data-aos-delay="300" data-aos-offset="0" data-aos-duration="3000">
-            </spline-viewer>
-            <div class="cover"></div>
+            <div class="robot-container">
+                <spline-viewer class="robot-3d" url="https://prod.spline.design/D8tXXK9oT9ukJphm/scene.splinecode"
+                    disableZoom disablePan disableCameraControls data-aos="fade-zoom-in" data-aos-easing="ease-in-back"
+                    data-aos-delay="300" data-aos-offset="0" data-aos-duration="3000">
+                </spline-viewer>
+
+                <div class="cover">
+                    <div class="edit-prompt">
+                        <h2>Edit the globe?</h2>
+                        <button id="edit-yes">Yes</button>
+                        <button id="edit-no">No</button>
+                    </div>
+                </div>
+
+                <div class="edit-controls" style="display: none;">
+                    <button id="done-editing">Done</button>
+                </div>
+            </div>
         </section>
 
         <section class="education" id="education">
@@ -113,7 +126,7 @@
                         <a href="https://phoenix4799.github.io/EzyBuy_Shopping_App/" target="_blank" rel="noopener"
                             title="View this project on GitHub" style="text-decoration: none; color: inherit;">
                             <div class="education-content">
-                                <div class="contents">
+                                <div class="contents" data-text="EzyBuy Shop -> Shop Now">
                                     <h3>EzyBuy – Shopping Platform</h3>
                                     <p>
                                         Built a responsive e-commerce site with real-time product recommendations, cart,
@@ -125,7 +138,7 @@
                         </a>
 
                         <div class="education-content">
-                            <div class="contents">
+                            <div class="contents" data-text="Portfolio Website -> View">
                                 <h3>Portfolio Website</h3>
                                 <p>Designed a personal portfolio with animated elements, glitch effects, and 3D logo
                                     interactions
@@ -134,7 +147,7 @@
                         </div>
 
                         <div class="education-content">
-                            <div class="contents">
+                            <div class="contents" data-text="TechNova -> View">
                                 <h3>TechNova – Landing Page</h3>
                                 <p>Developed a sleek landing page for a tech startup. Focused on clean UI, fast load
                                     speed, and
@@ -147,7 +160,7 @@
                 <div data-aos="fade-left" class="education-column">
                     <div class="education-box">
                         <div class="education-content">
-                            <div class="contents">
+                            <div class="contents" data-text="Creative Studio -> View">
                                 <h3>Creative Studio – Web Redesign</h3>
                                 <p>Redesigned a local agency's website with a modern, mobile-first approach.
                                     Improved UX, branding consistency, and performance using Flexbox and Grid.</p>
@@ -155,7 +168,7 @@
                         </div>
 
                         <div class="education-content">
-                            <div class="contents">
+                            <div class="contents" data-text="QuickTask -> View">
                                 <h3>QuickTask – Task Manager App</h3>
                                 <p>Built a task management tool with local storage. Features include task sorting,
                                     filtering,
@@ -164,7 +177,7 @@
                         </div>
 
                         <div class="education-content">
-                            <div class="contents">
+                            <div class="contents" data-text="EduSpace -> View">
                                 <h3>EduSpace – Learning Portal</h3>
                                 <p>Created a learning management system for online courses. Included user login, course
                                     progress tracking, and quiz modules using Flask backend.</p>

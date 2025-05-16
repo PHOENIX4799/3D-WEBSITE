@@ -88,9 +88,50 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // —— Globe resize ——
+    const cover = document.querySelector('.cover');
+    const robot3d = document.querySelector('.robot-3d');
+    const editPrompt = document.querySelector('.edit-prompt');
+    const editControls = document.querySelector('.edit-controls');
+
+    document.getElementById('edit-yes').addEventListener('click', () => {
+        cover.style.zIndex = '-2';
+        robot3d.style.pointerEvents = 'auto'; // allow interaction
+        editControls.style.display = 'block';
+    });
+
+    document.getElementById('edit-no').addEventListener('click', () => {
+        cover.classList.remove('hovered');
+        setTimeout(() => {
+            cover.classList.add('hovered');
+        }, 5000);
+
+    });
+
+    document.getElementById('done-editing').addEventListener('click', () => {
+        cover.style.zIndex = '1';
+        robot3d.style.pointerEvents = 'none';
+        editControls.style.display = 'none';
+    });
+
+
     // —— Footer Year Update ——
     document.getElementById('current-year').textContent = new Date().getFullYear();
 
+    // —— Scroll on globe ——
+    let isHoveringGlobe = false;
+
+    robot3d.addEventListener('mouseenter', () => isHoveringGlobe = true);
+    robot3d.addEventListener('mouseleave', () => isHoveringGlobe = false);
+
+    window.addEventListener('wheel', (e) => {
+        if (isHoveringGlobe && robot3d.style.pointerEvents === 'auto') {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+
     // —— AOS Init ——
     AOS.init();
+
 });

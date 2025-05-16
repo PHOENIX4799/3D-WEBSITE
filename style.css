@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Poppins', 'Segoe UI', 'Roboto', sans-serif;
     background-color: #080808;
     color: #e7e7e7;
     height: 100vh;
@@ -360,6 +360,14 @@ nav a:hover::after {
     margin: 0;
 }
 
+.robot-container {
+    position: absolute;
+    display: flex;
+    right: 0;
+    width: 800px;
+    height: 800px;
+}
+
 .robot-3d {
     position: absolute;
     top: 0;
@@ -371,6 +379,7 @@ nav a:hover::after {
     -webkit-user-select: none;
     user-select: none;
     touch-action: none;
+    z-index: 0;
 }
 
 .cover {
@@ -382,7 +391,57 @@ nav a:hover::after {
     height: 800px;
     background-color: transparent;
     z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
 }
+
+.cover:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.edit-prompt {
+    display: none;
+    color: white;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.edit-prompt h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.cover:hover .edit-prompt {
+    display: block;
+}
+
+.edit-prompt button {
+    margin: 10px;
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+.edit-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    z-index: 2;
+}
+
+.edit-controls button {
+    padding: 8px 14px;
+    background-color: #3f51b5;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
 
 @media (max-width: 1300px) {
     header {
@@ -524,19 +583,24 @@ nav a:hover::after {
 }
 
 .education-content .contents::before {
-    content: '';
+    content: attr(data-text);
+    justify-content: center;
+    align-items: center;
+    display: flex;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    background: #fffefe33;
-    z-index: -1;
-    transition: .5s;
+    font-size: 25px;
+    font-weight: bold;
+    bottom: 0;
+    overflow: hidden;
+    height: 0;
+    width: 110%;
+    background: linear-gradient(to top, #000000, #09024d, #3e31f87e);
+    left: -5%;
+    transition: .3s;
 }
 
 .education-content .contents:hover::before {
-    width: 100%;
+    height: 100%;
 }
 
 .testimonial {
@@ -833,14 +897,21 @@ nav a:hover::after {
         z-index: 10;
         margin-top: 0;
         margin-left: 5%;
-        max-width: 90%;
+        max-width: 100%;
+    }
+
+    .edit-controls {
+        align-items: center;
+        justify-content: center;
+        left: 50%;
+        z-index: 2;
     }
 
     .btn-signing {
         display: none;
     }
 
-    .modal > .btn-signing {
+    .modal>.btn-signing {
         display: block;
         margin: 0 auto;
         width: 30%;
@@ -857,14 +928,60 @@ nav a:hover::after {
         width: 100%;
         height: 100vh;
         overflow: hidden;
-        display: flex;
         align-items: center;
         overflow: visible;
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .robot-container {
+        position: relative;
+        top: -55vh;
+        right: 0;
+        width: 750px;
+        height: 100px;
+        order: 1;
+        height: auto;
+        z-index: 1;
+    }
+
+
+    .edit-controls {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        display: flex;
+        gap: 1rem;
+        flex-direction: column; /* if you want buttons stacked */
+        align-items: center;
+    }
+
+    .edit-controls button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+
+    .robot-3d,
+    .cover {
+        width: 100%;
+    }
+
+    .content {
+        top: 20vh;
+        order: 2;
+        padding: 13px;
+    }
+
+    .cover .edit-prompt {
+        display: none;
     }
 
     .shine-line {
         font-size: 2.5rem;
-        margin: 1.5rem 0;
+        margin: 10px 0;
     }
 
     .description {
@@ -882,8 +999,7 @@ nav a:hover::after {
     }
 
     .buttons {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
         gap: 0.7rem;
         margin-top: 2rem;
     }
@@ -892,8 +1008,8 @@ nav a:hover::after {
     .btn-signing-main,
     .btn-Rate {
         width: fit-content;
-        font-size: 0.9rem;
-        padding: 0.6rem 1.2rem;
+        font-size: 14px;
+        padding: 5px 4px;
     }
 
     .btn-signing-main {
@@ -908,24 +1024,7 @@ nav a:hover::after {
     .rating-row {
         font-size: 9px;
         justify-content: space-between;
-    }
-
-    .robot-3d,
-    .cover {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 400px;
-        height: 100%;
-        transform: none;
-    }
-
-    .robot-3d {
-        z-index: 1;
-    }
-
-    .cover {
-        z-index: 2;
+        flex-direction: row;
     }
 
     #education {
