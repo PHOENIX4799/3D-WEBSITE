@@ -8,31 +8,29 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="images/Logo2.png" type="image/x-icon" />
 </head>
 
 <body>
-
-    <audio id="pageAudio">
-        <source src="/images/a thousand years (speed up + lyrics).mp4" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
 
     <img class="image-gradient" src="gradient.png" alt="gradient">
     <div class="layer-blur"></div>
 
     <div class="container">
         <header>
-            <h1 data-aos="fade-down" data-aos-duration="1500" class="logo">PHOENIX</h1>
+            <h1 data-aos="fade-down" data-aos-duration="1500" class="logo">
+                <img class="logo-head" src="/images/Logo2.png" alt="Logo">
+            </h1>
 
             <nav>
                 <a data-aos="fade-down" data-aos-duration="1500" class="nav-link" href="#Home">HOME</a>
                 <a data-aos="fade-down" data-aos-duration="2000" class="nav-link" href="#education">PROJECT</a>
                 <a data-aos="fade-down" data-aos-duration="2500" class="nav-link" href="#testimonial">TESTIMONIALS</a>
                 <a data-aos="fade-down" data-aos-duration="3000" class="nav-link" href="#contact">CONTACT</a>
+                <button id="theme-toggle" title="Toggle theme" data-aos="fade-down" data-aos-duration="4500">
+                    <span class="sun"><i class='bx bx-sun'></i></span>
+                    <span class="moon"><i class='bx bx-moon'></i></span>
+                </button>
             </nav>
 
             <div class="menu">
@@ -43,8 +41,13 @@
 
             <div class="modal">
                 <a data-aos="fade-down" data-aos-duration="1500" class="btn-signing" href="phoene-sign.html">SIGNING</a>
+                
                 <span class="close-btn"><i class='bx bx-x-circle'></i></span>
                 <nav>
+                    <button id="theme-toggle-modal" title="Toggle theme">
+                        <span class="sun"><i class='bx bx-sun'></i></span>
+                        <span class="moon"><i class='bx bxs-moon'></i></span>
+                    </button>
                     <a class="nav-link" href="#Home">HOME</a>
                     <a class="nav-link" href="#education">PROJECT</a>
                     <a class="nav-link" href="#testimonial">TESTIMONIALS</a>
@@ -111,7 +114,7 @@
                     </div>
                 </div>
 
-                <div class="edit-controls" style="display: none;">
+                <div class="edit-controls">
                     <button id="done-editing">Done</button>
                 </div>
             </div>
@@ -123,8 +126,8 @@
             <div class="education-row">
                 <div data-aos="fade-right" class="education-column">
                     <div class="education-box">
-                        <a href="https://phoenix4799.github.io/EzyBuy_Shopping_App/" target="_blank" rel="noopener"
-                            title="View this project on GitHub" style="text-decoration: none; color: inherit;">
+                        <a href="https://phoenix4799.github.io/EzyBuy_Shopping_App/" class="links" target="_blank"
+                            rel="noopener" title="View this project on GitHub">
                             <div class="education-content">
                                 <div class="contents" data-text="EzyBuy Shop -> Shop Now">
                                     <h3>EzyBuy – Shopping Platform</h3>
@@ -191,18 +194,18 @@
         <section class="testimonial" id="testimonial">
             <div data-aos="fade-up" data-aos-duration="3000" class="slider">
                 <div class="card active">
-                    <div class="img-holder"><img class="image" src="/images/03.png" alt="image"></div>
+                    <div class="img-holder"><img class="image" src="/images/paul.png" alt="image"></div>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae, suscipit vero?
                         Blanditiis omnis eius quisquam perferendis veritatis provident eos soluta nobis cum.</p>
                     <a href="" class="read">Contact</a>
                 </div>
                 <div class="card">
-                    <div class="img-holder"><img class="image" src="/images/02.png" alt="image"></div>
+                    <div class="img-holder"><img class="image" src="/images/pic-1.png" alt="image"></div>
                     <p>Blanditiis omnis eius quisquam perferendis veritatis provident eos soluta nobis cum.</p>
                     <a href="" class="read">Contact</a>
                 </div>
                 <div class="card">
-                    <div class="img-holder"><img class="image" src="/images/01.png" alt="image"></div>
+                    <div class="img-holder"><img class="image" src="/images/Phoenix47.png" alt="image"></div>
                     <p>I am extremely pleased with the service provided.
                         From the moment I reached out, the team was attentive
                         and guided me through every step of the process. Their
@@ -215,17 +218,17 @@
                     <a href="" class="read">Contact</a>
                 </div>
                 <div class="card">
-                    <div class="img-holder"><img class="image" src="/images/02.png" alt="image"></div>
+                    <div class="img-holder"><img class="image" src="/images/phoenix.png" alt="image"></div>
                     <p>Blanditiis omnis eius quisquam perferendis veritatis provident eos soluta nobis cum.</p>
                     <a href="" class="read">Contact</a>
                 </div>
                 <div class="card">
-                    <div class="img-holder"><img class="image" src="/images/01.png" alt="image"></div>
+                    <div class="img-holder"><img class="image" src="/images/Logo2.png" alt="image"></div>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae, suscipit vero?</p>
                     <a href="" class="read">Contact</a>
                 </div>
                 <div class="card">
-                    <div class="img-holder"><img class="image" src="/images/02.png" alt="image"></div>
+                    <div class="img-holder"><img class="image" src="/images/phoenix.png" alt="image"></div>
                     <p>Blanditiis omnis eius quisquam perferendis veritatis provident eos soluta nobis cum.</p>
                     <span class="read" id="call-link" title="Contact">CONTACT</span>
                 </div>

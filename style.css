@@ -15,6 +15,88 @@ body {
     height: 100vh;
     min-height: 100vh;
     line-height: 1.5;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+.light-mode {
+    background-color: white;
+    color: black;
+}
+
+#theme-toggle {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: transform 0.6s ease;
+}
+
+
+#theme-toggle.rotated {
+    transform: rotate(360deg) scale(1.1);
+}
+
+#theme-toggle-modal {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: transform 0.6s ease;
+}
+#theme-toggle-modal.rotated {
+    transform: rotate(360deg) scale(1.1);
+}
+
+.sun {
+    display: block;
+}
+
+.moon {
+    display: none;
+}
+
+.light-mode .sun {
+    display: none;
+}
+
+.light-mode .moon {
+    display: block;
+}
+
+.light-mode header {
+    background-color: #c4c2c281;
+}
+
+.light-mode .tag-box {
+    color: white;
+}
+
+.light-mode .education-content .contents::before {
+    color: rgb(29, 29, 29);
+    background: linear-gradient(to top, #573bf8, #8c7ffd, #beb9fd7e);
+}
+
+.light-mode .contact form .input-box input,
+.light-mode .contact form textarea {
+    border: 1px solid #e0e7f79d;
+}
+
+.light-mode .card {
+    background-color: #ffffff;
+    box-shadow: 0 8px 20px rgba(140, 149, 236, 0.925);
+}
+
+.light-mode .card p {
+    color: #000000;
+    font-weight: 400;
 }
 
 .image-gradient {
@@ -57,11 +139,20 @@ header {
     z-index: 10000;
 }
 
-header h1 {
-    margin: 0;
+.logo {
+    display: flex;
+    align-items: center;
     font-size: 3rem;
-    font-weight: 300;
+    gap: 20px;
 }
+
+.logo-head {
+    height: 1em;
+    width: auto;
+    font-weight: 300;
+    border-radius: 10px;
+}
+
 
 header.scrolled {
     background: rgba(0, 0, 0, 0.6);
@@ -73,8 +164,8 @@ header.scrolled {
 .menu {
     display: none;
     position: relative;
-    width: 48px;
-    height: 48px;
+    width: 45px;
+    height: 45px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     cursor: pointer;
@@ -138,6 +229,16 @@ header.scrolled {
     z-index: 100;
 }
 
+nav span i {
+    font-size: 30px;
+    color: yellow;
+    transition: transform 0.3s ease;
+}
+
+.light-mode nav span i {
+    color: #000;
+}
+
 nav {
     display: flex;
     align-items: center;
@@ -152,6 +253,11 @@ nav a {
     transition: color 0.2s ease;
     text-decoration: none;
     color: inherit;
+}
+
+.light-mode .nav-link {
+    color: #ffffff;
+    font-weight: 500;
 }
 
 .nav-link:hover {
@@ -311,6 +417,10 @@ nav a:hover::after {
     background-color: #1a1a1a;
 }
 
+.light-mode .btn-get-started {
+    border: 1px solid #adaaaa;
+}
+
 .btn-signing-main {
     text-decoration: none;
     background-color: lightgray;
@@ -333,6 +443,10 @@ nav a:hover::after {
     display: inline-block;
     border: 1px solid #2a2a2a;
     color: #fff;
+}
+
+.light-mode .btn-Rate {
+    border: 1px solid #adaaaa;
 }
 
 .btn-Rate:hover {
@@ -397,9 +511,6 @@ nav a:hover::after {
     transition: background-color 0.3s ease;
 }
 
-.cover:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-}
 
 .edit-prompt {
     display: none;
@@ -427,6 +538,7 @@ nav a:hover::after {
 
 .edit-controls {
     position: absolute;
+    display: none;
     bottom: 20px;
     left: 50%;
     z-index: 2;
@@ -614,6 +726,11 @@ nav a:hover::after {
     color: #fff;
 }
 
+.links {
+    text-decoration: none;
+    color: inherit;
+}
+
 .slider {
     display: flex;
     width: 100%;
@@ -701,7 +818,7 @@ nav a:hover::after {
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    box-shadow: 0 0 50px rgb(48, 33, 250);
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
 }
 
 .card p {
@@ -847,7 +964,13 @@ nav a:hover::after {
 
 @media (max-width: 460px) {
     header {
-        padding: 1rem 2rem;
+        padding: .5rem .5rem;
+        height: 50px;
+    }
+
+    .logo-head {
+        display: flex;
+        font-size: 2.5rem;
     }
 
     .menu {
@@ -955,7 +1078,8 @@ nav a:hover::after {
         z-index: 2;
         display: flex;
         gap: 1rem;
-        flex-direction: column; /* if you want buttons stacked */
+        flex-direction: column;
+        /* if you want buttons stacked */
         align-items: center;
     }
 
@@ -1055,5 +1179,7 @@ nav a:hover::after {
         margin: 4px 0;
         border: 1px solid #908f92a1;
     }
-
+    #theme-toggle-modal{
+        display: flex;
+    }
 }

@@ -30,16 +30,11 @@
       width: 100vw;
       max-width: 350px;
       height: 600px;
-      background: #fff;
+      background: #ffffff;
       border-radius: 24px;
-      box-shadow:
-        0 8px 20px rgba(83, 0, 160, 0.4),
-        0 0 30px rgba(83, 0, 160, 0.2),
-        inset 0 0 60px rgba(255 255 255 / 0.15);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      padding: 0 15px; /* horizontal padding for spacing */
     }
 
     /* Close button */
@@ -103,7 +98,6 @@
       pointer-events: none;
       z-index: 1;
       border-radius: 24px;
-      box-shadow: 0 15px 25px rgba(83, 0, 160, 0.25);
     }
 
     .form-container.active {
@@ -112,24 +106,18 @@
       pointer-events: auto;
       z-index: 3;
     }
-
-    /* Positions and transforms */
     .form-container.sign-in {
       transform: translateY(0%);
     }
     .form-container.sign-up {
       transform: translateY(100%);
     }
-
-    /* When active toggled on #app, slide the forms appropriately */
     #app.active .form-container.sign-in {
       transform: translateY(-100%);
     }
     #app.active .form-container.sign-up {
       transform: translateY(0%);
     }
-
-    /* Button panel inside each form on top */
     .button-panel {
       width: 100%;
       display: flex;
@@ -140,14 +128,12 @@
       user-select: none;
       flex-shrink: 0;
     }
-
-    /* Buttons to toggle forms */
     .static {
       flex: 1;
       background: #e0dafb;
       border: none;
       border-radius: 30px;
-      padding: 14px 0;
+      padding: 10px 0;
       font-weight: 700;
       font-size: 1.05rem;
       color: #5300a0;
@@ -176,8 +162,6 @@
       color: #310064;
       box-shadow: inset 0 0 8px #36007c88;
     }
-    /* Active states for buttons inside containers */
-    /* For sign-in container buttons */
     .form-container.sign-in .static.login-btn {
       background-color: #5300a0;
       color: #fff;
@@ -186,6 +170,7 @@
         0 0 12px 2px #7f47d7aa,
         inset 0 0 12px 1px #914ef2;
       cursor: default;
+      margin-top: 30px;
     }
     .form-container.sign-in .static.signup-btn {
       background-color: #e0dafb;
@@ -193,8 +178,8 @@
       pointer-events: auto;
       box-shadow: none;
       cursor: pointer;
+      margin-top: 30px;
     }
-    /* For sign-up container buttons */
     .form-container.sign-up .static.signup-btn {
       background-color: #5300a0;
       color: #fff;
@@ -203,6 +188,7 @@
         0 0 12px 2px #7f47d7aa,
         inset 0 0 12px 1px #914ef2;
       cursor: default;
+      margin-top: 30px;
     }
     .form-container.sign-up .static.login-btn {
       background-color: #e0dafb;
@@ -210,9 +196,8 @@
       pointer-events: auto;
       box-shadow: none;
       cursor: pointer;
+      margin-top: 30px;
     }
-
-    /* Headings */
     h2 {
       margin: 0 0 24px;
       font-weight: 700;
@@ -225,16 +210,13 @@
       user-select: none;
       letter-spacing: 0.06em;
       font-variant: small-caps;
+      margin-bottom: 30px;
     }
-
-    /* Form fields */
     form {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
       overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: #7f47d7 transparent;
       -webkit-user-select: text;
       user-select: text;
     }
@@ -258,17 +240,17 @@
     input[type="text"],
     input[type="email"],
     input[type="password"] {
-      width: 90%;
+      width: 100%;
       padding: 14px 18px;
       font-size: 1.1rem;
-      margin-bottom: 20px;
-      border-radius: 20px;
-      border: 2px solid #d4c7f7;
+      margin-bottom: 10px;
+      border-radius: 15px;
+      border: 1px solid #d4c7f7;
       background: #f7f3ff;
       transition:
         border-color 0.3s ease,
         box-shadow 0.3s ease;
-      outline-offset: 2px;
+      outline-offset: none;
       outline-color: transparent;
       -webkit-user-select: text;
       user-select: text;
@@ -284,7 +266,7 @@
       box-shadow:
         inset 0 1px 3px #9757fdaa,
         0 0 12px 3px #b08fffcc;
-      outline-color: #5300a0cc;
+      outline: none;
       background: #f2edff;
     }
     input::placeholder {
@@ -294,10 +276,8 @@
       -webkit-user-select: none;
       user-select: none;
     }
-
-    /* Buttons for submitting */
     .submit-btn {
-      background: linear-gradient(135deg, #5300a0, #7f47d7);
+      background: linear-gradient(to bottom, #5300a0, #d8c5f7);
       color: white;
       font-weight: 700;
       border: none;
@@ -311,26 +291,19 @@
       margin-top: auto;
       -webkit-user-select: none;
       user-select: none;
-      box-shadow:
-        0 4px 16px #5300a0cc;
       text-shadow: 0 1px 2px rgba(0,0,0,0.2);
       letter-spacing: 0.06em;
       font-variant: small-caps;
     }
     .submit-btn:hover,
     .submit-btn:focus {
-      background: linear-gradient(135deg, #7f47d7, #5300a0);
-      box-shadow:
-        0 0 20px 4px #7f47d7cc,
-        inset 0 0 10px 2px #9e6fffcc;
+      background: linear-gradient(to bottom, #d4c0f5, #5300a0);
       outline: none;
     }
     .submit-btn:active {
-      background: linear-gradient(135deg, #3b0071, #5f31aa);
+      background: linear-gradient(to top, #3b0071, #5f31aa);
       box-shadow: inset 0 0 8px #430099cc;
     }
-
-    /* Responsive rules: disable sliding on desktop */
     @media (min-width: 601px) {
       body {
         display: flex;
@@ -398,10 +371,10 @@
       <h2>Sign In</h2>
       <form id="login-form" novalidate>
         <label for="login-email">Email</label>
-        <input type="email" id="login-email" name="email" placeholder="you@example.com" autocomplete="username" required />
+        <input type="email" id="login-email" name="email" placeholder="you@example.com" autocomplete="off" required />
 
         <label for="login-password">Password</label>
-        <input type="password" id="login-password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+        <input type="password" id="login-password" name="password" placeholder="••••••••" autocomplete="new-password" required />
 
         <button class="submit-btn" type="submit">Login</button>
       </form>
@@ -415,10 +388,10 @@
       <h2>Sign Up</h2>
       <form novalidate>
         <label for="signup-name">Full Name</label>
-        <input type="text" id="signup-name" name="name" placeholder="Your full name" autocomplete="name" required />
+        <input type="text" id="signup-name" name="name" placeholder="Your full name" autocomplete="off" required />
 
         <label for="signup-email">Email</label>
-        <input type="email" id="signup-email" name="email" placeholder="you@example.com" autocomplete="email" required />
+        <input type="email" id="signup-email" name="email" placeholder="you@example.com" autocomplete="off" required />
 
         <label for="signup-password">Password</label>
         <input type="password" id="signup-password" name="password" placeholder="••••••••" autocomplete="new-password" required />

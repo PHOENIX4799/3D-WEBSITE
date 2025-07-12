@@ -88,6 +88,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    const toggleButton = document.getElementById("theme-toggle");
+    const toggleButtonModal = document.getElementById("theme-toggle-modal");
+    if (toggleButtonModal) {
+        toggleButtonModal.addEventListener("click", () => {
+            const body = document.body;
+            body.classList.toggle("light-mode");
+            toggleButtonModal.classList.toggle("rotated");
+        });
+    }
+    const body = document.body;
+
+    toggleButton.addEventListener("click", () => {
+        body.classList.toggle("light-mode");
+        toggleButton.classList.toggle("rotated");
+    });
+
+
     // —— Globe resize ——
     const cover = document.querySelector('.cover');
     const robot3d = document.querySelector('.robot-3d');
