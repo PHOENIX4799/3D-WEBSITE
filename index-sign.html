@@ -28,17 +28,23 @@
                     <a href="#" class="social" title="LinkedIN"><i class="fab fa-linkedin-in"></i></a>
                 </div>
                 <span>or use your email for registration</span>
-                <div class="infield">
-                    <input type="text" placeholder="Name" autocomplete="off" required/>
-                    <label></label>
+                <div class="input-box">
+                    <input type="text" id="regEmail" autocomplete="off" required title="Enter your email address" />
+                    <label>Email</label>
+                    <i class="fa-regular fa-envelope"></i>
                 </div>
-                <div class="infield">
-                    <input type="email" placeholder="Email" name="email" autocomplete="off" required/>
-                    <label></label>
+                <div class="input-box">
+                    <input type="text" id="regUsername" autocomplete="off" required title="Enter your username" />
+                    <label>Username</label>
+                    <i class="fa-regular fa-user"></i>
                 </div>
-                <div class="infield">
-                    <input type="password" placeholder="Password" autocomplete="new-password" required/>
-                    <label></label>
+                <div class="input-box">
+                    <input type="password" id="regPassword" autocomplete="new-password" required
+                        title="Enter your password" />
+                    <label for="password">Password</label>
+                    <span class="toggle-password" onclick="togglePassword('regPassword', this)">
+                        <i class="fa-regular fa-eye"></i>
+                    </span>
                 </div>
                 <button class="submit" type="submit">Sign Up</button>
             </form>
@@ -52,13 +58,18 @@
                     <a href="#" class="social" title="LinkedIN"><i class="fab fa-linkedin-in"></i></a>
                 </div>
                 <span>or use your account</span>
-                <div class="infield">
-                    <input type="email" placeholder="Email" name="email" autocomplete="off" required/>
-                    <label></label>
+                <div class="input-box">
+                    <input type="text" id="loginUsername" autocomplete="off" required title="Enter your username" />
+                    <label for="username">Username</label>
+                    <i class="fa-regular fa-user"></i>
                 </div>
-                <div class="infield">
-                    <input type="password" placeholder="Password" autocomplete="new-password" required/>
-                    <label></label>
+                <div class="input-box">
+                    <input type="password" id="loginPassword" autocomplete="new-password" required
+                        title="Enter your password" />
+                    <label for="password">Password</label>
+                    <span class="toggle-password" onclick="togglePassword('loginPassword', this)">
+                        <i class="fa-regular fa-eye"></i>
+                    </span>
                 </div>
                 <a href="#" class="forgot">Forgot your password?</a>
                 <button class="submit" type="submit">Sign In</button>
@@ -101,6 +112,20 @@
                 overlayBtn.classList.add('btnScaled');
             })
         });
+
+        function togglePassword(inputId, el) {
+            const input = document.getElementById(inputId);
+            const icon = el.querySelector("i");
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.className = "fa-regular fa-eye-slash";
+            } else {
+                input.type = "password";
+                icon.className = "fa-regular fa-eye";
+            }
+        }
+
     </script>
 
 </body>

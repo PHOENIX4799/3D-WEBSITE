@@ -12,13 +12,38 @@ html {
 
 body {
     font-family: 'Poppins', 'Segoe UI', 'Roboto', sans-serif;
-    background-color: #080808;
+    background: #080808;
     color: #e7e7e7;
     height: 100vh;
     min-height: 100vh;
     line-height: 1.5;
     transition: background-color 0.5s, color 0.5s;
     flex-direction: column;
+}
+
+.section .contact {
+    position: relative;
+    min-height: 100vh;
+    background-image: url('images/Logo-light.png') !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.section>* {
+    position: relative;
+    z-index: 3;
 }
 
 .light-mode {
@@ -198,7 +223,10 @@ header.scrolled {
     right: -100%;
     width: 250px;
     height: auto;
-    background: rgba(50, 50, 51, 0.466);
+    background-image: url('images/l0g02.png');
+    background-repeat: no-repeat;
+    background-size: 300px auto;
+    background-position: center;
     color: white;
     transition: right 0.3s ease-in-out;
     padding: 20px;
@@ -209,6 +237,14 @@ header.scrolled {
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
     box-shadow: 0 0 20px rgb(0, 0, 0);
+}
+
+.modal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4); /* dark overlay - adjust as needed */
+    z-index: -99999; /* Push it behind the content */
 }
 
 .modal.active {
@@ -630,16 +666,28 @@ nav a:hover::after {
 }
 
 #education {
-    background-color: #060aff65;
+    position: relative; /* Required for overlay positioning */
+    background-image: url('images/l0g02.png');
+    background-repeat: no-repeat;
+    background-size: 400px auto;
+    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 0 2rem;
+    padding: 70px 2rem 5rem;
     margin-top: 10px;
-    padding-bottom: 5rem;
-    padding-top: 70px;
+    z-index: 1; /* Layer below content */
 }
+
+#education::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4); /* dark overlay - adjust as needed */
+    z-index: -1; /* Push it behind the content */
+}
+
 
 .education .heading {
     margin-top: 70px;
@@ -902,14 +950,28 @@ nav a:hover::after {
 }
 
 #contact {
-    background-color: #060aff65;
-    text-align: center;
-    padding: 40px 20px;
-    height: 100vh;
-    margin: auto;
-    align-items: center;
+    position: relative; /* Required for overlay positioning */
+    background-image: url('images/l0g02.png');
+    background-repeat: no-repeat;
+    background-size: 400px auto;
+    background-position: center;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 70px 2rem 5rem;
+    margin-top: 10px;
+    z-index: 1; /* Layer below content */
 }
+
+#contact::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(73, 11, 172, 0.4); /* dark overlay - adjust as needed */
+    z-index: -1; /* Push it behind the content */
+}
+
 
 .contact .heading {
     margin-top: 20px;

@@ -90,25 +90,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const toggleButton = document.getElementById("theme-toggle");
     const toggleButtonModal = document.getElementById("theme-toggle-modal");
-    if (toggleButtonModal) {
-        toggleButtonModal.addEventListener("click", () => {
-            const body = document.body;
-            body.classList.toggle("light-mode");
-            toggleButtonModal.classList.toggle("rotated");
-        });
-    }
+    const logoImg = document.getElementById("logo-img");
+    const favicon = document.getElementById("favicon");
     const body = document.body;
 
-    toggleButton.addEventListener("click", () => {
+    // Function to toggle theme and update favicon
+    function toggleTheme(source) {
         body.classList.toggle("light-mode");
-        toggleButton.classList.toggle("rotated");
-    });
+        source.classList.toggle("rotated");
+        const lightLogo = "images/Logo-light.png";
+        const darkLogo = "images/Logo-dark.png";
+        const isLight = body.classList.contains("light-mode");
+
+        // Update favicon (force refresh)
+        favicon.href = (isLight ? lightLogo : darkLogo) + "?v=" + new Date().getTime();
+
+        // Update header logo
+        logoImg.src = isLight ? lightLogo : darkLogo;
+    }
+
+    // Main toggle button event
+    if (toggleButton) {
+        toggleButton.addEventListener("click", () => toggleTheme(toggleButton));
+    }
+
+    // Modal toggle button event
+    if (toggleButtonModal) {
+        toggleButtonModal.addEventListener("click", () => toggleTheme(toggleButtonModal));
+    }
 
 
     // —— Globe resize ——
     const cover = document.querySelector('.cover');
     const robot3d = document.querySelector('.robot-3d');
-    const editPrompt = document.querySelector('.edit-prompt');
     const editControls = document.querySelector('.edit-controls');
 
     document.getElementById('edit-yes').addEventListener('click', () => {

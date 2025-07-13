@@ -9,7 +9,11 @@
 :root {
     --linear-grad: linear-gradient(to right, #5300a0, #000);
     --grad-clr1: #3c056e;
+    --accent-color: #4c078b;
+    --bg-color: #fff;
     --grad-clr2: #5300a0;
+    --input-bg: #caa6eb81;
+    --text-color: #000;
 }
 
 body {
@@ -21,11 +25,11 @@ body {
 }
 
 .page-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
 }
 
 .container {
@@ -86,7 +90,7 @@ form {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0px 50px;
+    padding: 0px 30px;
 }
 
 h1 {
@@ -145,41 +149,82 @@ span {
     font-size: 12px;
 }
 
-.infield {
+.input-box {
     position: relative;
-    margin: 8px 0px;
-    width: 100%;
+    margin: 20px 0;
 }
 
-input {
+.input-box input {
     width: 100%;
-    padding: 12px 15px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    border: none;
+    height: 50px;
+    border: 3px solid var(--input-bg);
+    border-radius: 40px;
+    background: transparent;
     outline: none;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: var(--text-color);
+    padding: 0 20px;
+    padding-right: 50px;
+    transition: .3s ease;
 }
 
-input:focus {
-    background-color: #b9aef841;
-}
-
-label {
+.input-box label {
     position: absolute;
-    left: 50%;
-    top: 100%;
-    transform: translateX(-50%);
-    width: 0%;
-    height: 2px;
-    background: var(--linear-grad);
-    transition: 0.3s;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 16px;
+    color: var(--text-color);
+    transition: 0.3s ease;
 }
 
-input:focus~label {
-    width: 95%;
-    border-radius: 5px;
+.input-box i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: var(--text-color);
+    cursor: pointer;
 }
 
+.input-box input:focus,
+.input-box input:valid {
+    border-color: var(--accent-color);
+    background-color: var(--input-bg);
+}
+
+.input-box:focus-within i {
+    color: var(--accent-color);
+}
+
+.input-box input:focus~label,
+.input-box input:valid~label {
+    top: 5px;
+    font-size: 13px;
+    background: var(--accent-color);
+    padding: 0 6px;
+    color: var(--bg-color);
+    border-radius: 8px;
+    box-shadow: 0 0 16px var(--accent-color);
+}
+.input-box input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset !important;
+    box-shadow: 0 0 0 1000px var(--input-bg) inset !important;
+    -webkit-text-fill-color: var(--text-color) !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--accent-color) inset !important;
+    box-shadow: 0 0 0 1000px var(--text-color) inset !important;
+    -webkit-text-fill-color: #000 !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+input:-webkit-autofill::placeholder {
+    color: transparent !important;
+}
 a {
     color: #333;
     font-size: 14px;
