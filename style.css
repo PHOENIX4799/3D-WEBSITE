@@ -6,6 +6,8 @@
 
 html {
     scroll-behavior: smooth;
+    height: 100%;
+    font-size: 16px;
 }
 
 body {
@@ -16,6 +18,7 @@ body {
     min-height: 100vh;
     line-height: 1.5;
     transition: background-color 0.5s, color 0.5s;
+    flex-direction: column;
 }
 
 .light-mode {
@@ -51,6 +54,7 @@ body {
     gap: 5px;
     transition: transform 0.6s ease;
 }
+
 #theme-toggle-modal.rotated {
     transform: rotate(360deg) scale(1.1);
 }
@@ -124,6 +128,7 @@ body {
     padding: 0 2px;
     position: relative;
     overflow: hidden;
+    flex: 1;
 }
 
 header {
@@ -144,6 +149,7 @@ header {
     align-items: center;
     font-size: 3rem;
     gap: 20px;
+    cursor: pointer;
 }
 
 .logo-head {
@@ -815,7 +821,8 @@ nav a:hover::after {
 
 .image {
     width: 150px;
-    height: 150px;
+    max-width: 100%;
+    height: auto;
     border-radius: 50%;
     object-fit: cover;
     filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
@@ -1179,7 +1186,8 @@ nav a:hover::after {
         margin: 4px 0;
         border: 1px solid #908f92a1;
     }
-    #theme-toggle-modal{
+
+    #theme-toggle-modal {
         display: flex;
     }
 }

@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 * {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
 }
 
@@ -18,6 +18,14 @@ body {
     display: grid;
     place-content: center;
     font-family: 'Poppins', sans-serif;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
 }
 
 .container {
@@ -103,7 +111,7 @@ h1 {
 
 .static {
     border-radius: 20px;
-    border: 1px solid --grad-clr1;
+    border: 1px solid var(--grad-clr1);
     background: white;
     color: #fff;
     font-size: 12px;
@@ -191,7 +199,7 @@ a.forgot:hover {
 
 .submit {
     border-radius: 20px;
-    border: 1px solid --grad-clr1;
+    border: 1px solid var(--grad-clr1);
     background: var(--grad-clr2);
     color: #fff;
     font-size: 12px;
@@ -373,11 +381,4 @@ footer p a {
         display: none;
     }
 
-}
-
-/* ================================
-   Mobile (≤480px) sliding forms
-   ================================ */
-@media only screen and (max-width: 480px) {
-    
 }
