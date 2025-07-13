@@ -110,7 +110,7 @@ body {
 
 .light-mode .education-content .contents::before {
     color: rgb(29, 29, 29);
-    background: linear-gradient(to top, #573bf8, #8c7ffd, #beb9fd7e);
+    background: linear-gradient(to top, rgba(52, 36, 78, 0.973), #7974ad, #4845687e);
 }
 
 .light-mode .contact form .input-box input,
@@ -684,7 +684,7 @@ nav a:hover::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4); /* dark overlay - adjust as needed */
+    background: rgba(73, 11, 172, 0.4); /* dark overlay - adjust as needed */
     z-index: -1; /* Push it behind the content */
 }
 
@@ -760,7 +760,7 @@ nav a:hover::after {
     overflow: hidden;
     height: 0;
     width: 110%;
-    background: linear-gradient(to top, #000000, #09024d, #3e31f87e);
+    background: linear-gradient(to top, #000000, #09024d, rgba(73, 11, 172, 0.4));
     left: -5%;
     transition: .3s;
 }
