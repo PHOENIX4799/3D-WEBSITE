@@ -24,11 +24,6 @@ body {
 .section .contact {
     position: relative;
     min-height: 100vh;
-    background-image: url('images/Logo-light.png') !important;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
     z-index: 1;
     overflow: hidden;
 }
@@ -213,6 +208,10 @@ header.scrolled {
     line-height: 1;
 }
 
+.light-mode .menu i{
+    color: #000;
+}
+
 .menu:hover {
     background: rgba(255, 255, 255, 0.2);
 }
@@ -223,10 +222,6 @@ header.scrolled {
     right: -100%;
     width: 250px;
     height: auto;
-    background-image: url('images/l0g02.png');
-    background-repeat: no-repeat;
-    background-size: 300px auto;
-    background-position: center;
     color: white;
     transition: right 0.3s ease-in-out;
     padding: 20px;
@@ -667,10 +662,6 @@ nav a:hover::after {
 
 #education {
     position: relative; /* Required for overlay positioning */
-    background-image: url('images/l0g02.png');
-    background-repeat: no-repeat;
-    background-size: 400px auto;
-    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -951,10 +942,6 @@ nav a:hover::after {
 
 #contact {
     position: relative; /* Required for overlay positioning */
-    background-image: url('images/l0g02.png');
-    background-repeat: no-repeat;
-    background-size: 400px auto;
-    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
