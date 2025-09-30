@@ -63,17 +63,16 @@
                         </div>
 
                         <div class="vc-footer">
-                            <a class="mini" href="services.html">View full dashboard</a>
+                            <a class="mini" href="#trust">View full dashboard</a>
                         </div>
                     </div>
                 </aside>
             </div>
 
-            <button class="scroll-hint" aria-hidden="true"><span class="chev"><i class='bxr  bx-caret-down'></i></span><span
-                class="sr-only">Scroll</span></button>
+            <button class="scroll-hint" aria-hidden="true"><span class="chev"><i
+                        class='bxr  bx-caret-down'></i></span><span class="sr-only">Scroll</span></button>
         </section>
 
-        <!-- INTRO / TEASER -->
         <section class="intro">
             <div class="container">
                 <h2>Secure. Analyze. Advise.</h2>
@@ -84,7 +83,6 @@
             </div>
         </section>
 
-        <!-- KEY SERVICES -->
         <section class="features">
             <div class="container">
                 <h2>Core Services</h2>
@@ -121,7 +119,6 @@
             </div>
         </section>
 
-        <!-- ABOUT TEASER -->
         <section class="about-teaser">
             <div class="container about-grid">
                 <div class="about-text">
@@ -139,7 +136,6 @@
             </div>
         </section>
 
-        <!-- TESTIMONIALS -->
         <section class="testimonials">
             <div class="container">
                 <h2>What our clients say</h2>
@@ -165,7 +161,39 @@
             </div>
         </section>
 
-        <!-- PRICING CTA -->
+        <section class="trust-section" id="trust">
+            <h2>Trusted by Businesses Worldwide</h2>
+            <p>We proudly safeguard organizations across diverse industries with advanced cybersecurity and data
+                protection solutions. Our systems ensure stability, privacy, and confidence for every client we serve.
+            </p>
+
+            <div class="trust-stats">
+                <div class="trust-card">
+                    <i class="fa-solid fa-building-shield"></i>
+                    <h3>120+</h3>
+                    <p>Companies Secured</p>
+                </div>
+
+                <div class="trust-card">
+                    <i class="fa-solid fa-users"></i>
+                    <h3>250+</h3>
+                    <p>Active Clients</p>
+                </div>
+
+                <div class="trust-card">
+                    <i class="fa-solid fa-globe"></i>
+                    <h3>15+</h3>
+                    <p>Countries Served</p>
+                </div>
+
+                <div class="trust-card">
+                    <i class="fa-solid fa-award"></i>
+                    <h3>99.99%</h3>
+                    <p>System Uptime</p>
+                </div>
+            </div>
+        </section>
+
         <section class="pricing-cta">
             <div class="container">
                 <h2>Plans that scale with you</h2>
@@ -194,7 +222,6 @@
             </div>
         </section>
 
-        <!-- FINAL CTA -->
         <section class="final-cta">
             <div class="container">
                 <h2>Ready to secure your organisation?</h2>
@@ -224,8 +251,14 @@
             window.addEventListener('scroll', check);
             document.addEventListener('DOMContentLoaded', check);
         }());
+        document.querySelector(".scroll-hint").addEventListener("click", () => {
+            window.scrollTo({
+                top: window.innerHeight,
+                behavior: "smooth",
+            });
+        });
     </script>
-    <script src="script.js"></script> <!-- keeps your header/footer loader -->
+    <script src="script.js"></script>
 </body>
 
 </html>
