@@ -74,16 +74,15 @@ document.addEventListener("click", (e) => {
 function initHeader() {
   const menuToggle = document.querySelector(".menu-toggle");
   const mobileNav = document.getElementById("mobileNav");
-  const navLinks = document.querySelectorAll(".mobile-navbar .nav-link");
+  const navLinksM = document.querySelectorAll(".mobile-navbar .nav-link");
+  const navLinks = document.querySelectorAll(".navbar .nav-links");
 
-  // Toggle mobile menu
   menuToggle.addEventListener("click", () => {
     mobileNav.classList.toggle("show");
     menuToggle.querySelector("i").classList.toggle("bx-menu");
     menuToggle.querySelector("i").classList.toggle("bx-x");
   });
 
-  // Close menu when clicking outside
   mobileNav.addEventListener("click", (e) => {
     if (e.target === mobileNav) {
       mobileNav.classList.remove("show");
@@ -92,7 +91,6 @@ function initHeader() {
     }
   });
 
-  // Highlight clicked nav link
   navLinks.forEach(link => {
     link.addEventListener("click", () => {
       navLinks.forEach(l => l.classList.remove("active"));
@@ -100,9 +98,21 @@ function initHeader() {
     });
   });
 
-  // ✅ Auto-highlight current page based on URL
-  const currentPage = window.location.pathname.split("/").pop(); // e.g. "about.html"
+  navLinksM.forEach(link => {
+    link.addEventListener("click", () => {
+      navLinksM.forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+    });
+  });
+
+  const currentPage = window.location.pathname.split("/").pop();
   navLinks.forEach(link => {
+    const href = link.getAttribute("href");
+    if (href === currentPage || (href === "index.html" && currentPage === "")) {
+      link.classList.add("active");
+    }
+  });
+  navLinksM.forEach(link => {
     const href = link.getAttribute("href");
     if (href === currentPage || (href === "index.html" && currentPage === "")) {
       link.classList.add("active");
@@ -110,16 +120,3 @@ function initHeader() {
   });
 }
 
-// ==========================
-// Footer Functionality
-// ==========================
-function initFooter() {
-  const footer = document.getElementById("siteFooter");
-  const toggle = document.getElementById("footerToggle");
-
-  if (footer && toggle) {
-    toggle.addEventListener("click", () => {
-      footer.classList.toggle("expanded");
-    });
-  }
-}
