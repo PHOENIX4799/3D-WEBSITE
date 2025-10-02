@@ -130,7 +130,7 @@ body {
 }
 
 .mobile-navbar .nav-link {
-  color: #fff;
+  color: var(--muted);
   font-size: 1.05rem;
   font-weight: 500;
   justify-content: space-between;
@@ -157,7 +157,7 @@ body {
 }
 
 .mobile-navbar .nav-link i {
-  color: transparent;
+  color: var(--muted);
 }
 
 .mobile-navbar .nav-link.active i {
@@ -937,6 +937,7 @@ body {
 
 .lables p.active i {
   transform: translateX(5px);
+  transform: rotate(90deg);
   color: #00ffff;
   transition: all 0.3s ease;
 }
@@ -1814,7 +1815,7 @@ body {
 
 .modal-left .ribbon-2 {
   position: absolute;
-  left: -1.0rem;
+  left: -1.1rem;
   top: -1rem;
   width: 50%;
   height: 3rem;
@@ -1848,8 +1849,8 @@ body {
 
 .modal-close {
   position: absolute;
-  top: 10px;
-  right: 14px;
+  top: 5px;
+  right: 0;
   font-size: 20px;
   padding: 0 5px;
   width: 30px;
@@ -1922,12 +1923,13 @@ body {
   padding: 4px 6px;
   border-radius: 8px;
   border: none;
-  background: #222; 
-  color: #fff;
+  background: transparent; 
+  color: var(--accent);
+  cursor: pointer;
 }
 
 .QRbtn-modal:hover {
-  background: #000;
+  background: #00000015;
 }
 
 
