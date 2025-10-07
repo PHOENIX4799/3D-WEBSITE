@@ -46,13 +46,11 @@ customSelects.forEach((select) => {
   const optionsContainer = select.querySelector(".options");
   const options = optionsContainer.querySelectorAll("div");
 
-  // Toggle dropdown
   selected.addEventListener("click", () => {
     optionsContainer.style.display =
       optionsContainer.style.display === "block" ? "none" : "block";
   });
 
-  // Select option
   options.forEach((option) => {
     option.addEventListener("click", () => {
       selected.textContent = option.dataset.value;
@@ -62,13 +60,18 @@ customSelects.forEach((select) => {
   });
 });
 
-// Close dropdown if clicked outside
 document.addEventListener("click", (e) => {
   customSelects.forEach((select) => {
     if (!select.contains(e.target)) {
       select.querySelector(".options").style.display = "none";
     }
   });
+});
+
+document.getElementById('pin').addEventListener('input', function (e) {
+  let value = e.target.value.replace(/\D/g, '');
+  value = value.replace(/(.{4})/g, '$1 ').trim();
+  e.target.value = value;
 });
 
 function initHeader() {
@@ -119,4 +122,16 @@ function initHeader() {
     }
   });
 }
+
+// Remove .html#section visits from browser history
+window.addEventListener("hashchange", () => {
+  const current = window.location.href;
+  
+  // If the URL has .html# in it, replace it with the base .html only
+  if (current.includes(".html#")) {
+    const cleanURL = current.split("#")[0]; // removes the #section
+    history.replaceState(null, null, cleanURL);
+  }
+});
+
 
