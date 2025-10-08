@@ -1772,7 +1772,7 @@ body {
 }
 
 #msg.show {
-  top: 80px;
+  top: 20px;
   opacity: 1;
   pointer-events: auto;
 }
