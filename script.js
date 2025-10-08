@@ -68,9 +68,9 @@ document.addEventListener("click", (e) => {
   });
 });
 
-document.getElementById('pin').addEventListener('input', function (e) {
-  let value = e.target.value.replace(/\D/g, '');
-  value = value.replace(/(.{4})/g, '$1 ').trim();
+document.getElementById("pin").addEventListener("input", function (e) {
+  let value = e.target.value.replace(/\D/g, "");
+  value = value.replace(/(.{4})/g, "$1 ").trim();
   e.target.value = value;
 });
 
@@ -94,28 +94,28 @@ function initHeader() {
     }
   });
 
-  navLinks.forEach(link => {
+  navLinks.forEach((link) => {
     link.addEventListener("click", () => {
-      navLinks.forEach(l => l.classList.remove("active"));
+      navLinks.forEach((l) => l.classList.remove("active"));
       link.classList.add("active");
     });
   });
 
-  navLinksM.forEach(link => {
+  navLinksM.forEach((link) => {
     link.addEventListener("click", () => {
-      navLinksM.forEach(l => l.classList.remove("active"));
+      navLinksM.forEach((l) => l.classList.remove("active"));
       link.classList.add("active");
     });
   });
 
   const currentPage = window.location.pathname.split("/").pop();
-  navLinks.forEach(link => {
+  navLinks.forEach((link) => {
     const href = link.getAttribute("href");
     if (href === currentPage || (href === "index.html" && currentPage === "")) {
       link.classList.add("active");
     }
   });
-  navLinksM.forEach(link => {
+  navLinksM.forEach((link) => {
     const href = link.getAttribute("href");
     if (href === currentPage || (href === "index.html" && currentPage === "")) {
       link.classList.add("active");
@@ -123,15 +123,10 @@ function initHeader() {
   });
 }
 
-// Remove .html#section visits from browser history
 window.addEventListener("hashchange", () => {
   const current = window.location.href;
-  
-  // If the URL has .html# in it, replace it with the base .html only
   if (current.includes(".html#")) {
-    const cleanURL = current.split("#")[0]; // removes the #section
+    const cleanURL = current.split("#")[0]; 
     history.replaceState(null, null, cleanURL);
   }
 });
-
-

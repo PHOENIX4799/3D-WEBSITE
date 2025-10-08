@@ -842,16 +842,25 @@ body {
   background: #222;
   color: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   font-size: 14px;
   border: none;
 }
+
 [popover]:popover-open {
   animation: fadeIn 0.2s ease;
 }
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 #backToTop {
@@ -1741,6 +1750,69 @@ body {
   flex-wrap: wrap;
 }
 
+#msg {
+  position: fixed;
+  left: 50%;
+  top: -160px;
+  transform: translateX(-50%);
+  min-width: 240px;
+  max-width: 92%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #ffffff, #f8fbff);
+  box-shadow: 0 12px 30px rgba(15, 25, 50, 0.15);
+  border: 1px solid rgba(20, 30, 60, 0.05);
+  opacity: 0;
+  transition: top 320ms cubic-bezier(.2, .9, .25, 1), opacity 220ms ease;
+  z-index: 9999;
+  pointer-events: none;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+#msg.show {
+  top: 80px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#msg .msg-inner {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+#msg .dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+#msg .dot.ok {
+  background: #e6fbf0;
+  border: 1px solid #d2f6dc;
+  color: #0a7a3d;
+}
+
+.btn-modal[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (max-width:420px) {
+  #msg {
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 8px;
+    width: calc(100% - 16px);
+  }
+}
+
 .modal-left,
 .modal-right {
   flex: 1 1 250px;
@@ -1866,7 +1938,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px; 
+  gap: 10px;
   margin-top: 24px;
   flex-wrap: wrap;
 }
@@ -1888,7 +1960,7 @@ body {
 }
 
 .btn-modal#qrCode {
-  background: #222; 
+  background: #222;
 }
 
 .btn-modal#qrCode:hover {
@@ -1899,7 +1971,7 @@ body {
   padding: 4px 6px;
   border-radius: 8px;
   border: none;
-  background: transparent; 
+  background: transparent;
   color: var(--accent);
   cursor: pointer;
 }

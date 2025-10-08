@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Modal</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(3px);
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    .modal-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+        position: relative;
+        background: #fff;
+        border-radius: 10px;
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+        z-index: 10;
+        width: 90%;
+        max-width: 700px;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .modal-left {
+        flex: 1;
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .modal-right {
+        flex: 1;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .btn-modal {
+        background: #007bff;
+        border: none;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn-modal:disabled {
+        background: #aaa;
+        cursor: not-allowed;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+
+    /* ✅ Status Modal */
+    #msg {
+        position: fixed;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #222;
+        color: #fff;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: top 0.5s ease;
+        z-index: 2000;
+    }
+
+    #msg.show {
+        top: 80px;
+    }
+
+    .msg-inner {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .dot.ok {
+        font-size: 18px;
+        background: #00c853;
+        color: white;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+</head>
+<body>
+
+<!-- Trigger button -->
+<button class="order-trigger btn-modal" 
+    data-plan-name="Premium Plan"
+    data-price="$49"
+    data-desc="Full access to all premium features."
+    data-specs='["24/7 Support", "Unlimited Projects", "Advanced Analytics"]'>
+    Open Order Modal
+</button>
+
+<!-- ✅ Main Modal -->
+<div class="modal" id="orderModal" aria-hidden="true">
+    <div class="modal-overlay"></div>
+    <div id="msg" role="status" aria-live="polite">
+        <div class="msg-inner">
+            <div class="dot ok">✓</div>
+            <div>
+                <div style="font-weight:700">Message sent</div>
+                <div style="font-size:13px;opacity:0.8">Your request was submitted successfully.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-content" role="dialog" aria-labelledby="modalTitle">
+        <div class="modal-close" aria-label="Close modal">×</div>
+
+        <div class="modal-left">
+            <div class="ribbon-2" id="modalRibbon"></div>
+            <h3 id="modalTitle"></h3>
+            <p id="modalDesc"></p>
+            <ul id="modalSpecs"></ul>
+            <p class="price" id="modalPrice"></p>
+        </div>
+
+        <div class="modal-right">
+            <form id="modalForm">
+                <input type="hidden" name="plan" id="modalPlan">
+                <div class="info">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="firstName" name="firstName" placeholder="First Name" required />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="lastName" name="lastName" placeholder="Last Name" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="pin" name="pin" placeholder="Card No. (#### #### #### ####)" maxlength="19" required />
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="details" placeholder="Additional Details"></textarea>
+                    </div>
+                </div>
+
+                <div class="QR" style="display: none;">
+                    <img src="QR-Code.jpg" alt="QR Code">
+                    <p>Scan the QR code to complete payment.</p>
+                    <button type="button" class="QRbtn-modal back-to-form">Back to Form</button>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn-modal" id="submit" disabled>Submit Order</button>
+                    <button type="button" class="btn-modal" id="qrCode">Pay via QR Code</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    const modalStatus = document.getElementById('msg');
+    let hideTimer = null;
+
+    function showStatusModal(opts = {}) {
+        const { text, subtext, timeout = 2000 } = opts;
+
+        if (text) modalStatus.querySelector('div > div:first-child').textContent = text;
+        if (subtext) modalStatus.querySelector('div > div:last-child').textContent = subtext;
+
+        modalStatus.classList.add('show');
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(() => modalStatus.classList.remove('show'), timeout);
+    }
+
+    window.showStatusModal = showStatusModal;
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById("orderModal");
+    const form = document.getElementById("modalForm");
+    const submitBtn = document.getElementById("submit");
+    const inputs = form.querySelectorAll("input[required], textarea[required]");
+    const qrSection = modal.querySelector('.QR');
+    const infoSection = modal.querySelector('.info');
+
+    // ✅ Enable/disable submit button based on input completeness
+    form.addEventListener("input", () => {
+        let allFilled = true;
+        inputs.forEach(input => {
+            if (!input.value.trim()) allFilled = false;
+        });
+        submitBtn.disabled = !allFilled;
+    });
+
+    // ✅ On Submit
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        showStatusModal({
+            text: "Message sent",
+            subtext: "Your request was submitted successfully.",
+            timeout: 2000
+        });
+
+        form.reset();              // Clear form after submit ✅
+        submitBtn.disabled = true; // Re-disable button
+    });
+
+    // Open modal trigger
+    document.querySelectorAll('.order-trigger').forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.add('active');
+        });
+    });
+
+    // Close modal
+    modal.querySelector('.modal-close').addEventListener('click', () => modal.classList.remove('active'));
+    modal.querySelector('.modal-overlay').addEventListener('click', () => modal.classList.remove('active'));
+});
+</script>
+
+</body>
+</html>

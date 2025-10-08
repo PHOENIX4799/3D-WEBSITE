@@ -332,6 +332,15 @@
 
         <div class="modal" id="orderModal" aria-hidden="true">
             <div class="modal-overlay"></div>
+            <div id="msg" role="status" aria-live="polite">
+                <div class="msg-inner">
+                    <div class="dot ok">✓</div>
+                    <div>
+                        <div style="font-weight:700">Message sent</div>
+                        <div style="font-size:13px;opacity:0.8">Your request was submitted successfully.</div>
+                    </div>
+                </div>
+            </div>
             <div class="modal-content" role="dialog" aria-labelledby="modalTitle">
                 <div class="modal-close" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></div>
 
@@ -373,8 +382,8 @@
                             <button type="button" class="QRbtn-modal back-to-form">Back to Form</button>
                         </div>
                         <div class="modal-actions">
-                            <button type="submit" class="btn-modal">Submit Order</button>
-                            <button class="btn-modal" id="qrCode">Pay via QR Code</button>
+                            <button type="submit" class="btn-modal" id="submit" disabled>Submit Order</button>
+                            <button type="button" class="btn-modal" id="qrCode">Pay via QR Code</button>
                         </div>
                     </form>
                 </div>
@@ -385,42 +394,86 @@
     <div id="footer"></div>
     <script src="script.js"></script>
     <script>
+        /* --------------------------
+           Consolidated & fixed script
+           -------------------------- */
+        (function () {
+            // Status helper (single, robust)
+            const statusEl = document.getElementById('msg');
+            let statusTimer = null;
+
+            function setStatusText(main, sub) {
+                if (!statusEl) return;
+                try {
+                    const mainEl = statusEl.querySelector('.msg-inner > div > div:first-child');
+                    const subEl = statusEl.querySelector('.msg-inner > div > div:last-child');
+                    if (mainEl && typeof main === 'string') mainEl.textContent = main;
+                    if (subEl && typeof sub === 'string') subEl.textContent = sub;
+                } catch (e) { /* ignore if DOM shape differs */ }
+            }
+
+            function showStatusModal(opts = {}) {
+                if (!statusEl) return;
+                const { text, subtext, timeout = 2000 } = opts;
+                if (text || subtext) setStatusText(text, subtext);
+                if (statusTimer) { clearTimeout(statusTimer); statusTimer = null; }
+                statusEl.classList.add('show');
+                statusTimer = setTimeout(() => { statusEl.classList.remove('show'); statusTimer = null; }, Math.max(300, Number(timeout) || 2000));
+            }
+
+            // expose globally for other code to call
+            window.showStatusModal = showStatusModal;
+
+            // dismiss behaviour for status
+            if (statusEl) {
+                statusEl.addEventListener('click', () => {
+                    statusEl.classList.remove('show');
+                    if (statusTimer) { clearTimeout(statusTimer); statusTimer = null; }
+                });
+                document.addEventListener('keydown', (ev) => {
+                    if (ev.key === 'Escape' && statusEl.classList.contains('show')) {
+                        statusEl.classList.remove('show');
+                        if (statusTimer) { clearTimeout(statusTimer); statusTimer = null; }
+                    }
+                });
+            }
+        })();
+
         document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById("orderModal");
+            const modal = document.getElementById('orderModal');
             if (!modal) return console.warn('orderModal not found');
 
-            const modalOverlay = modal.querySelector(".modal-overlay");
-            const modalClose = modal.querySelector(".modal-close");
+            const overlay = modal.querySelector('.modal-overlay');
+            const closeBtn = modal.querySelector('.modal-close');
 
-            const modalRibbon = document.getElementById("modalRibbon");
-            const modalTitle = document.getElementById("modalTitle");
-            const modalDesc = document.getElementById("modalDesc");
-            const modalSpecs = document.getElementById("modalSpecs");
-            const modalPrice = document.getElementById("modalPrice");
-            const modalPlan = document.getElementById("modalPlan");
+            const modalRibbon = document.getElementById('modalRibbon');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDesc = document.getElementById('modalDesc');
+            const modalSpecs = document.getElementById('modalSpecs');
+            const modalPrice = document.getElementById('modalPrice');
+            const modalPlan = document.getElementById('modalPlan');
 
-            const formInfo = modal.querySelector('.info');
-            const qrSection = modal.querySelector('.QR');
-            const qrBtn = modal.querySelector('#qrCode');
-            const backBtn = modal.querySelector('.back-to-form');
+            const form = modal.querySelector('#modalForm');
+            const submitBtn = form ? form.querySelector('#submit') : null;
+            const pinInput = form ? form.querySelector('#pin') : null;
+            const infoBlock = modal.querySelector('.info');
+            const qrBlock = modal.querySelector('.QR');
+            const qrBtn = form ? form.querySelector('#qrCode') : null;
+            const backBtn = form ? form.querySelector('.back-to-form') : null;
 
             function parseSpecs(raw) {
                 if (!raw) return [];
-                try {
-                    return JSON.parse(raw);
-                } catch (err) {
-                    return raw.split(';').map(s => s.trim()).filter(Boolean);
-                }
+                try { return JSON.parse(raw); }
+                catch (err) { return raw.split(';').map(s => s.trim()).filter(Boolean); }
             }
 
             function resetModalView() {
-                if (formInfo) formInfo.style.display = '';
-                if (qrSection) qrSection.style.display = 'none';
+                if (infoBlock) infoBlock.style.display = '';
+                if (qrBlock) qrBlock.style.display = 'none';
             }
 
             function openModalFromTrigger(btn) {
                 if (!btn) return;
-
                 modalRibbon && (modalRibbon.textContent = btn.dataset.ribbon || '');
                 modalTitle && (modalTitle.textContent = btn.dataset.planName || '');
                 modalDesc && (modalDesc.textContent = btn.dataset.desc || '');
@@ -438,57 +491,112 @@
                 }
 
                 resetModalView();
-
                 modal.classList.add('active');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
 
+                // focus first input
                 const firstInput = modal.querySelector('input, textarea, button');
                 if (firstInput) firstInput.focus();
+
+                // update submit state
+                updateButtonState();
             }
 
+            // attach triggers
             document.querySelectorAll('.order-trigger').forEach(trigger => {
-                trigger.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    openModalFromTrigger(trigger);
-                });
+                trigger.addEventListener('click', (e) => { e.preventDefault(); openModalFromTrigger(trigger); });
             });
 
+            // close handlers
+            if (overlay) overlay.addEventListener('click', () => { modal.classList.remove('active'); resetModalView(); modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; });
+            if (closeBtn) closeBtn.addEventListener('click', () => { modal.classList.remove('active'); resetModalView(); modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    modal.classList.remove('active');
+                    resetModalView();
+                    modal.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            /* ---------- Form behavior ---------- */
+            function updateButtonState() {
+                if (!form || !submitBtn) return;
+                submitBtn.disabled = !form.checkValidity();
+            }
+
+            // preserve caret while formatting card number
+            function formatCardNumberPreserveCaret(inputEl, rawValue, caretPos) {
+                const digitsBeforeCaret = (rawValue.slice(0, caretPos).match(/\d/g) || []).length;
+                const digits = rawValue.replace(/\D/g, '').slice(0, 16);
+                const formatted = digits.replace(/(\d{4})/g, '$1 ').trim();
+                // compute caret position from digitsBeforeCaret
+                let pos = 0, seen = 0;
+                while (pos < formatted.length && seen < digitsBeforeCaret) {
+                    if (/\d/.test(formatted[pos])) seen++;
+                    pos++;
+                }
+                inputEl.value = formatted;
+                try { inputEl.setSelectionRange(pos, pos); } catch (err) { }
+            }
+
+            if (form) {
+                // enable/disable on input
+                form.addEventListener('input', updateButtonState);
+
+                // submit: show status, reset form, disable button
+                form.addEventListener('submit', (e) => {
+                    if (!form.checkValidity()) {
+                        updateButtonState();
+                        return; // let browser show validation UI
+                    }
+                    e.preventDefault();
+
+                    // show fixed status message (2s) and then automatically clear form
+                    if (window.showStatusModal) window.showStatusModal({ text: 'Message sent', subtext: 'Your request was submitted successfully.', timeout: 2000 });
+
+                    // clear form right away (you wanted it cleared after submit)
+                    form.reset();
+                    updateButtonState();
+                });
+
+                // card input formatting
+                if (pinInput) {
+                    pinInput.addEventListener('input', (ev) => {
+                        const el = ev.target;
+                        const raw = el.value;
+                        const caret = el.selectionStart || raw.length;
+                        formatCardNumberPreserveCaret(el, raw, caret);
+                    });
+                }
+            }
+
+            // QR behavior
             if (qrBtn) {
                 qrBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    if (formInfo) formInfo.style.display = 'none';
-                    if (qrSection) qrSection.style.display = 'flex';
-                    const focusable = qrSection && qrSection.querySelector('button, a, input');
+                    if (infoBlock) infoBlock.style.display = 'none';
+                    if (qrBlock) qrBlock.style.display = 'block';
+                    if (submitBtn) submitBtn.disabled = true;
+                    const focusable = qrBlock && qrBlock.querySelector('button, a, input');
                     if (focusable) focusable.focus();
                 });
-            } else {
-                // If qrBtn not found, don't crash — log to console for debugging
-                // console.info('qr button not found inside modal');
             }
 
             if (backBtn) {
                 backBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    if (qrSection) qrSection.style.display = 'none';
-                    if (formInfo) formInfo.style.display = '';
+                    if (qrBlock) qrBlock.style.display = 'none';
+                    if (infoBlock) infoBlock.style.display = '';
+                    updateButtonState();
                     const firstInput = modal.querySelector('input, textarea, button');
                     if (firstInput) firstInput.focus();
                 });
             }
 
-            [modalOverlay, modalClose].forEach(el => {
-                if (!el) return;
-                el.addEventListener('click', () => {
-                    modal.classList.remove('active');
-                    resetModalView();
-                });
-            });
-
-            document.addEventListener('keydown', e => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    modal.classList.remove('active');
-                    resetModalView();
-                }
-            });
+            // ensure button state reflects any prefilled values
+            updateButtonState();
         });
     </script>
 </body>
